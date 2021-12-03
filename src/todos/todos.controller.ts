@@ -1,6 +1,7 @@
 import { TodosService } from './todos.service';
 import { Todo } from './../todo';
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Logger, NotFoundException, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Logger, NotFoundException, Param, Post, Put, Req } from '@nestjs/common';
+import { Request } from 'express';
 
 @Controller('todos')
 export class TodosController {
@@ -9,8 +10,8 @@ export class TodosController {
   constructor(private todosService: TodosService) {}
 
   @Get()
-  getAll(): Todo[] {
-    this.logger.log('All todos requested.');
+  getAll(@Req() req: any): Todo[] {
+    this.logger.log(req.user.sub);
     return this.todosService.getAll();
   }
 
